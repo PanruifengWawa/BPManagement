@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<link rel="stylesheet" href="./resource/css/lib/bootstrap.min.css">
+
+<link rel="stylesheet" href="./resource/css/lib/bootstrap-theme.min.css">
+
+<link rel="stylesheet" type="text/css" href="./resource/css/index.css" />
+
+<script src="./resource/js/lib/jquery-1.11.1.min.js"></script>
+
+<script src="./resource/js/lib/bootstrap.min.js"></script>
+
+<script src="./resource/js/lib/angular.min.js"></script>
+
+<script src="./resource/js/app.js"></script>
+
+<script src="./resource/js/APIRouters.js"></script>
+
+<script src="./resource/js/login/loginService.js"></script>
+
+<script src="./resource/js/login/loginController.js"></script>
+
+
+<title>血压管理数据采集系统</title>
+</head>
+<body ng-app="myApp">
+
+  <div class="main" ng-controller="loginController">
+
+    <div class="login">
+      <div class="title">
+         <span>血压管理数据采集系统</span>
+      </div>
+      
+      <div class="form-group my-form">
+         <span class="my-span">用户名</span>
+         <input type="text" class="form-control my-input" ng-model="userName" placeholder="用户名">
+         
+         <span>密码</span>
+         <input type="password" class="form-control my-input" ng-model="password" placeholder="密码">
+         <button class="btn btn-primary btn-block" ng-click="login()">登录</button>
+         <div class="my-warning"><span>{{warning}}</span></div>
+      </div>
+      
+    </div>
+  </div>
+ 
+
+
+</body>
+</html>
