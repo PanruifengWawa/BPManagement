@@ -27,10 +27,10 @@ public class WelcomeController {
 	
 	@RequestMapping(value="/setInfo", method = RequestMethod.GET)
     @ResponseBody
-    public void setInfo(
+    public String setInfo(
     		HttpServletRequest request
     		) {
-        welcomeService.setWelcomeInfo(request);
+        return welcomeService.setWelcomeInfo(request);
     }
 
 }

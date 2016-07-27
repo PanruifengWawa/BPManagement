@@ -13,13 +13,11 @@ myApp.controller("welcomeController",function($scope,$rootScope,welcomeService) 
 		
 		var promise = welcomeService.getWelcomeInfo();
 		promise.success(function(data,status,config,headers) {
-			$scope.loginInfo = data;
-			console.log(data);
-			sessionStorage.loginInfo = JSON.stringify(data);
+			$scope.loginInfo = JSON.parse(data);
+			sessionStorage.loginInfo = data;
 			welcomeService.setWelcomeInfo();
 		});
 		promise.error(function(){
-			console.log(1);
 			welcomeService.setWelcomeInfo();
 		});
 	}

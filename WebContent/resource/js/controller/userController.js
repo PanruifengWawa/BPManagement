@@ -29,6 +29,7 @@ myApp.controller("userController",function($scope,userService,context) {
 	
 	$scope.logout = function() {
 		//clear buffer data
+		sessionStorage.clear();
 		window.location.href =  context;
 	}
 });

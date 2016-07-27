@@ -21,7 +21,7 @@ public class DataUploadController {
 	@RequestMapping(value="/file/upload", method = RequestMethod.POST)
     @ResponseBody
     public BPData getData(
-    		@RequestParam(value = "file", required = true) MultipartFile file,
+    		@RequestParam(value="dataFile",required=true) MultipartFile file,
     		HttpServletRequest request
     		) {
         return fileService.getData(file);

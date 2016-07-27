@@ -25,7 +25,7 @@ public class WelcomeServiceImpl implements WelcomeService {
 	}
 
 	@Override
-	public void setWelcomeInfo(HttpServletRequest request) {
+	public String setWelcomeInfo(HttpServletRequest request) {
 		// TODO Auto-generated method stub
 		String filePath = request.getSession().getServletContext().getRealPath("/") + "welcome";
 		File fileDir = new File(filePath);
@@ -60,6 +60,7 @@ public class WelcomeServiceImpl implements WelcomeService {
 				e.printStackTrace();
 			}
 		}
+		return "ok";
 		
 	}
 

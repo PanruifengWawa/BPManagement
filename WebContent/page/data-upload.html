@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE HTML>
-<html>
+<html ng-app="myApp">
 <head>
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -22,31 +22,41 @@
 <![endif]-->
 <title>血压数据上传</title>
 </head>
-<body>
+<body ng-controller="dataController">
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 血压数据管理 <span class="c-gray en">&gt;</span> 血压数据上传 <a class="btn btn-success radius r mr-20" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" ><i class="Hui-iconfont">&#xe68f;</i></a></nav>
 <div class="pd-20">
   <form class="form form-horizontal" >
     <div class="row cl">
       <label class="form-label col-2"><span class="c-red">*</span>选择文件：</label>
       <div class="formControls col-3">
-        <input type="file" class="input-text" id="data-file" accept=".csv">
+        <input type="file" class="input-text" id="dataFile" name="dataFile" accept=".csv">
       </div>
       <div class="col-1"> </div>
     </div>
     <div class="row cl">
       <div class="col-9 col-offset-2">
-        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" ng-click="upload()">
         <input class="btn btn-default radius" type="submit" value="&nbsp;&nbsp;取消&nbsp;&nbsp;" onClick="javascript:location.replace(location.href);">
       </div>
     </div>
   </form>
 </div>
 
-
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
 <script type="text/javascript" src="lib/layer/2.1/layer.js"></script> 
 <script type="text/javascript" src="lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script> 
 <script type="text/javascript" src="js/H-ui.js"></script> 
 <script type="text/javascript" src="js/H-ui.admin.js"></script> 
+
+<script src="resource/js/lib/angular.min.js"></script>
+
+<script src="resource/js/app.js"></script>
+
+<script src="resource/js/APIRouters.js"></script>
+
+<script src="resource/js/service/dataService.js"></script>
+
+<script src="resource/js/controller/dataController.js"></script>
+
 </body>
 </html>
