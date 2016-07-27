@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.philips.model.BPData;
 import com.philips.service.FileService;
 
 @Controller
@@ -19,7 +20,7 @@ public class DataUploadController {
 	
 	@RequestMapping(value="/file/upload", method = RequestMethod.POST)
     @ResponseBody
-    public String getData(
+    public BPData getData(
     		@RequestParam(value = "file", required = true) MultipartFile file,
     		HttpServletRequest request
     		) {

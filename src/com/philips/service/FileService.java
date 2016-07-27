@@ -2,6 +2,8 @@ package com.philips.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.philips.model.BPData;
+
 public interface FileService {
-	public String getData(MultipartFile file);
+	public BPData getData(MultipartFile file);
 }
