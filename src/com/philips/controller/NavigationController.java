@@ -34,4 +34,9 @@ public class NavigationController {
         return "/admin-pwd-change";
 	}
 
+	@RequestMapping(value="/data_statistics")
+    public String dataStatistics(){
+        return "/data-statistics";
+	}
+
 }

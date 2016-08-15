@@ -10,6 +10,18 @@ myApp.service("dataService",function($http,APIRouters,context) {
 		    data: formData
 		});
 		return promise;
+	};
+	
+	this.importData = function(data) {
+		return $http({
+			method: 'POST',
+			url: APIRouters.importDataAPI,
+			data: data,
+			headers: {
+				'Content-Type': undefined,
+				'Token': sessionStorage.token
+			}
+		});
 	}
 	
 });

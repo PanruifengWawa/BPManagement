@@ -1,0 +1,269 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="css/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>数据同步统计</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 数据同步统计 </nav>
+
+<div class="pd-20">
+    <div class="search">
+        <input type="text" name="" id="" placeholder="ID搜索" style="width:250px" class="input-text">
+	    <button class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+    
+    </div>  
+    <br>
+    <div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort my-table">
+		    <caption class="my-caption">用户信息表</caption>
+			<tbody>
+				<tr class="text-c">
+					<td class="name"><b>ID</b></td>
+					<td class="value">10001</td>
+				</tr>
+				<tr class="text-c">
+					<td class="name"><b>姓名</b></td>
+					<td class="value">张三</td>
+				</tr>
+				<tr class="text-c">
+					<td class="name"><b>性别</b></td>
+					<td class="value">男</td>
+				</tr>
+				<tr class="text-c">
+					<td class="name"><b>患病年数</b></td>
+					<td class="value">3</td>
+				</tr>
+				<tr class="text-c">
+					<td class="name"><b>xx</b></td>
+					<td class="value">xx</td>
+				</tr>	
+			</tbody> 
+		</table>
+		
+	</div>
+	<br><br>
+	
+	<div class="text-c search"> 日期范围：
+		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="sportStartData" class="input-text Wdate" style="width:120px;" value="2016-07-25">
+		-
+		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:120px;" value="2016-07-31">
+		<button name="" id="" class="btn btn-success" type="submit" onClick="testSport()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div id="sport" style="min-width:700px;height:400px"></div><br>
+	
+	
+	<br><br>
+	
+	<div class="text-c search"> 日期范围：
+		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;" value="2016-07-25">
+		-
+		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:120px;" value="2016-07-25">
+		<button name="" id="" class="btn btn-success" type="submit" onClick="testBP()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div id="BP" style="min-width:700px;height:400px"></div>
+</div>
+
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.1/layer.js"></script>
+<script type="text/javascript" src="js/H-ui.js"></script> 
+<script type="text/javascript" src="js/H-ui.admin.js"></script>
+<script type="text/javascript" src="lib/My97DatePicker/WdatePicker.js"></script> 
+<script type="text/javascript" src="lib/Highcharts/4.1.7/js/highcharts.js"></script>
+<script type="text/javascript" src="lib/Highcharts/4.1.7/js/modules/exporting.js"></script>
+
+<script src="resource/js/lib/angular.min.js"></script>
+
+<script src="resource/js/app.js"></script>
+
+<script type="text/javascript">
+
+var sportSubTitle = '姓名:张三';
+var sportXAxis = ['2016-07-25', '2016-07-26', '2016-07-27', '2016-07-28', '2016-07-29', '2016-07-30','2016-07-31'];
+var sportYData = [0, 0, 0, 1600, 120, 130, 100];
+function testSport() {
+	sportXAxis = ['2016-07-28', '2016-07-29', '2016-07-30','2016-07-31'];
+	sportYData = [160, 120, 130, 100];
+	sportInit();
+}
+
+function testBP() {
+	BPYear = 2016, BPMonth = 6, BPDay = 25;
+	BPYData = [
+               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
+               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
+               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
+               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
+               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
+               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
+               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
+               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
+               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
+               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
+               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
+               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
+               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
+               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
+               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
+               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
+               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
+               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
+               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
+               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
+               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
+               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
+               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
+               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
+               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
+               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
+               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
+               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
+               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232
+           ];
+	BPInit();
+}
+
+function sportInit() {
+    $('#sport').highcharts({
+        title: {
+            text: '<b>运动量</b>',
+            x: -20 //center
+        },
+        subtitle: {
+            text: sportSubTitle,
+            x: -20
+        },
+        exporting:{
+        	enabled: true
+        },
+        xAxis: {
+            categories: sportXAxis
+        },
+        yAxis: {
+            title: {
+                text: '运动量 (cal)'
+            },
+            plotLines: [{
+                value: 0,
+                width: 1,
+                color: '#808080'
+            }]
+        },
+        tooltip: {
+            valueSuffix: 'cal'
+        },
+        legend: {
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            borderWidth: 0
+        },
+        series: [{
+            name: '运动量',
+            data: sportYData
+        }]
+    });
+}
+
+var BPSubTitle = '姓名:张三';
+var BPYear = 2016, BPMonth = 6, BPDay = 25;
+var BPYData = [
+               0.8446 , 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
+               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
+               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
+               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
+               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
+               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
+               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
+               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
+               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
+               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239
+           ];
+    
+ function BPInit() {   
+    $('#BP').highcharts({
+        chart: {
+            zoomType: 'x',
+            spacingRight: 20
+        },
+        title: {
+            text: '<b>血压</b>'
+        },
+        subtitle: {
+            text: BPSubTitle
+        },
+        xAxis: {
+            type: 'datetime',
+            maxZoom: 0 * 24 * 3600000, // fourteen days
+            title: {
+                text: null
+            }
+        },
+        yAxis: {
+            title: {
+                text: '血压 (mmHg)'
+            }
+        },
+        tooltip: {
+            shared: true
+        },
+        legend: {
+            enabled: false
+        },
+        plotOptions: {
+            area: {
+                fillColor: {
+                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
+                    stops: [
+                        [0, Highcharts.getOptions().colors[0]],
+                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                    ]
+                },
+                lineWidth: 1,
+                marker: {
+                    enabled: false
+                },
+                shadow: false,
+                states: {
+                    hover: {
+                        lineWidth: 1
+                    }
+                },
+                threshold: null
+            }
+        },
+        
+        tooltip: {
+            valueSuffix: 'mmHg'
+        },
+        series: [{
+            type: 'area',
+            name: '血压',
+            pointInterval:  15 * 60 * 1000,
+            pointStart: Date.UTC(BPYear,BPMonth,BPDay,0,0,0,0),
+            data: BPYData
+        }]
+    });
+}
+sportInit();
+BPInit();
+</script>
+</body>
+</html>

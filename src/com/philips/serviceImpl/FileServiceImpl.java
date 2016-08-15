@@ -49,7 +49,7 @@ public class FileServiceImpl implements FileService {
 						// TODO: handle exception
 						e.printStackTrace();
 					}
-					bpData.setUserId(userId);
+					bpData.setUserCode(userId);
 					break;
 				case 2:
 					break;
@@ -116,7 +116,7 @@ public class FileServiceImpl implements FileService {
 
             br.close();
             reader.close();
-            bpData.setNickname(bpList);
+            bpData.setRecords(bpList);
        }catch(Exception e) {
            e.printStackTrace();  
        }

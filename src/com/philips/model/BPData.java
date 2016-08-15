@@ -4,20 +4,21 @@ import java.util.HashMap;
 import java.util.List;
 
 public class BPData {
-	private Integer userId;
-	private List<HashMap<String,Object>> nickname;
-	public Integer getUserId() {
-		return userId;
+	private Integer userCode;
+	private List<HashMap<String,Object>> records;
+	public Integer getUserCode() {
+		return userCode;
 	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setUserCode(Integer userCode) {
+		this.userCode = userCode;
 	}
-	public List<HashMap<String, Object>> getNickname() {
-		return nickname;
+	public List<HashMap<String, Object>> getRecords() {
+		return records;
 	}
-	public void setNickname(List<HashMap<String, Object>> nickname) {
-		this.nickname = nickname;
-	} 
+	public void setRecords(List<HashMap<String, Object>> records) {
+		this.records = records;
+	}
+	
 	
 	
 }
