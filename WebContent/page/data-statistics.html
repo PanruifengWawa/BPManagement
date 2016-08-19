@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html ng-app="myApp">
 <head>
 <meta charset="utf-8">
 <meta name="renderer" content="webkit|ie-comp|ie-stand">
@@ -21,13 +21,13 @@
 <![endif]-->
 <title>数据同步统计</title>
 </head>
-<body>
+<body ng-controller="dataStatisticsController">
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 数据同步统计 </nav>
 
 <div class="pd-20">
     <div class="search">
-        <input type="text" name="" id="" placeholder="ID搜索" style="width:250px" class="input-text">
-	    <button class="btn btn-success"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+        <input type="text" ng-model="userId" placeholder="ID搜索" style="width:250px" class="input-text">
+	    <button class="btn btn-success" ng-click="searchById()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
     
     </div>  
     <br>
@@ -37,48 +37,160 @@
 			<tbody>
 				<tr class="text-c">
 					<td class="name"><b>ID</b></td>
-					<td class="value">10001</td>
+					<td class="value">{{user.id}}</td>
 				</tr>
 				<tr class="text-c">
-					<td class="name"><b>姓名</b></td>
-					<td class="value">张三</td>
+					<td class="name"><b>CODE</b></td>
+					<td class="value">{{user.code}}</td>
 				</tr>
 				<tr class="text-c">
-					<td class="name"><b>性别</b></td>
-					<td class="value">男</td>
+					<td class="name"><b>年龄</b></td>
+					<td class="value">{{user.age}}</td>
 				</tr>
 				<tr class="text-c">
-					<td class="name"><b>患病年数</b></td>
-					<td class="value">3</td>
+					<td class="name"><b>身高(cm)</b></td>
+					<td class="value">{{user.height}}</td>
 				</tr>
 				<tr class="text-c">
-					<td class="name"><b>xx</b></td>
-					<td class="value">xx</td>
+					<td class="name"><b>体重(kg)</b></td>
+					<td class="value">{{user.weight}}</td>
 				</tr>	
 			</tbody> 
 		</table>
 		
 	</div>
-	<br><br>
+	<br>
+	<div class="text-c search"> 日期(饮食记录)：
+		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchFoodDate">
+		
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchFoodRecord()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort">
+		    <caption class="my-caption">用户饮食记录</caption>
+			<thead>
+				<tr class="text-c">
+					<th width="30">ID</th>
+					<th width="30">用餐类型</th>
+					<th width="120">用餐内容</th>
+
+				</tr>
+			</thead>
+			<tbody>
+			    <tr class="text-c" ng-repeat="foodRecord in foodRecords">
+			        <td>{{foodRecord.userId}}</td>
+			        <td>{{mealTypes[foodRecord.mealtype]}}</td>
+			        <td>
+			            <span ng-if="foodRecord.egg>0">蛋类</span>
+			            <span ng-if="foodRecord.meatproduct>0">肉加工</span>
+			            <span ng-if="foodRecord.stuffing>0">带馅类</span>
+			            <span ng-if="foodRecord.milk>0">奶类</span>
+			            <span ng-if="foodRecord.beanproduct>0">豆制品</span>
+			            <span ng-if="foodRecord.snack>0">零食</span>
+			            <span ng-if="foodRecord.seafood>0">海鲜</span>
+			            <span ng-if="foodRecord.chinesesnack>0">中式小吃</span>
+			            <span ng-if="foodRecord.nut>0">坚果</span>
+			            <span ng-if="foodRecord.meat>0">肉</span>
+			            <span ng-if="foodRecord.pickles>0">酱腌菜</span>
+			            <span ng-if="foodRecord.fastfood>0">快餐</span>
+			            <span ng-if="foodRecord.eatout>0">在外就餐</span>
+			            <span ng-if="foodRecord.sweet>0">甜点</span>
+			            <span ng-if="foodRecord.salt>0">盐{{foodRecord.salt}}勺</span>
+			            <span ng-if="foodRecord.soysauce>0">酱油{{foodRecord.soysauce}}勺</span>
+			            <span ng-if="foodRecord.sauce>0">酱料{{foodRecord.sauce}}勺</span>
+			            <span ng-if="foodRecord.condiment>0">调味品{{foodRecord.condiment}}勺</span>
+			            <span ng-if="foodRecord.mainfood>0">主食{{foodRecord.mainfood}}两</span>
+			        </td>
+			    </tr>
+				<tr>
+				    <td colspan="3" ng-if="foodRecords.length==0">无数据</td>
+				</tr>
+				
+			</tbody> 
+		</table>
+		
+	</div><br>
+	<div class="text-c search"> 日期(饮品与吸烟记录)：
+		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchDrinkDate">
+		
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchDrink()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort">
+		    <caption class="my-caption">用户饮品与吸烟记录</caption>
+			<thead>
+				<tr class="text-c">
+					<th width="30">ID</th>
+					<th width="30">时间</th>
+					<th width="30">茶（杯）</th>
+					<th width="30">酒（杯）</th>
+					<th width="30">水（杯）</th>
+					<th width="30">吸烟（支）</th>
+					<th width="30">二手烟（只）</th>
+
+				</tr>
+			</thead>
+			<tbody>
+			    <tr class="text-c" ng-repeat="item in drink">
+			        <td>{{drink.userId}}</td>
+			        <td>{{item.time}}</td>
+			        <td>{{item.tea/10}}</td>
+			        <td>{{item.wine/10}}</td>
+			        <td>{{item.water/10}}</td>
+			        <td>{{item.smoke/10}}</td>
+			        <td>{{item.shsmoke/10}}</td>
+			    </tr>
+				<tr>
+				    <td colspan="7" ng-if="drink.length==0">无数据</td>
+				</tr>
+				
+			</tbody> 
+		</table>
+		
+	</div><br>
 	
-	<div class="text-c search"> 日期范围：
+<!-- 	<div class="text-c search"> 日期范围：
 		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="sportStartData" class="input-text Wdate" style="width:120px;" value="2016-07-25">
 		-
 		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:120px;" value="2016-07-31">
 		<button name="" id="" class="btn btn-success" type="submit" onClick="testSport()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
 	</div>
-	<div id="sport" style="min-width:700px;height:400px"></div><br>
+	<div id="sport" style="min-width:700px;height:400px"></div><br> -->
 	
 	
 	<br><br>
 	
-	<div class="text-c search"> 日期范围：
-		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="logmin" class="input-text Wdate" style="width:120px;" value="2016-07-25">
-		-
-		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'logmin\')}',maxDate:'%y-%M-%d'})" id="logmax" class="input-text Wdate" style="width:120px;" value="2016-07-25">
-		<button name="" id="" class="btn btn-success" type="submit" onClick="testBP()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	<div class="text-c search"> 日期(血压记录)：
+		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchBPDate">
+		
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchBP()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
 	</div>
 	<div id="BP" style="min-width:700px;height:400px"></div>
+	<br><br>
+	
+	<div class="text-c search"> 日期(情绪记录)：
+		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;"  id="searchMontionDate">
+		
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchMontion()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div id="montion" style="min-width:700px;height:400px"></div>
+	
+	<br><br>
+	<div class="text-c search"> 日期(症状记录)：
+		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchSymptomDate">
+		
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchSymptom()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div id="symptom" style="min-width:700px;height:400px"></div>
+	
+	<br><br>
+	<div class="text-c search">日期(盐含量记录)：
+		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'searchSaltEndDate\')||\'%y-%M-%d\'}'})" id="searchSaltStartDate" class="input-text Wdate" style="width:120px;" >
+		-
+		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'searchSaltStartDate\')}',maxDate:'%y-%M-%d'})" id="searchSaltEndDate" class="input-text Wdate" style="width:120px;">
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchSalt()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div id="salt" style="min-width:700px;height:400px"></div>
 </div>
 
 <script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
@@ -93,177 +205,13 @@
 
 <script src="resource/js/app.js"></script>
 
-<script type="text/javascript">
+<script src="resource/js/APIRouters.js"></script>
 
-var sportSubTitle = '姓名:张三';
-var sportXAxis = ['2016-07-25', '2016-07-26', '2016-07-27', '2016-07-28', '2016-07-29', '2016-07-30','2016-07-31'];
-var sportYData = [0, 0, 0, 1600, 120, 130, 100];
-function testSport() {
-	sportXAxis = ['2016-07-28', '2016-07-29', '2016-07-30','2016-07-31'];
-	sportYData = [160, 120, 130, 100];
-	sportInit();
-}
+<script src="resource/js/service/dataStatisticsService.js"></script>
 
-function testBP() {
-	BPYear = 2016, BPMonth = 6, BPDay = 25;
-	BPYData = [
-               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
-               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
-               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
-               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
-               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
-               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
-               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
-               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
-               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
-               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
-               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
-               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
-               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
-               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
-               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
-               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
-               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
-               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
-               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
-               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
-               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
-               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
-               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
-               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
-               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
-               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
-               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
-               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
-               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232
-           ];
-	BPInit();
-}
+<script src="resource/js/service/dataListService.js"></script>
 
-function sportInit() {
-    $('#sport').highcharts({
-        title: {
-            text: '<b>运动量</b>',
-            x: -20 //center
-        },
-        subtitle: {
-            text: sportSubTitle,
-            x: -20
-        },
-        exporting:{
-        	enabled: true
-        },
-        xAxis: {
-            categories: sportXAxis
-        },
-        yAxis: {
-            title: {
-                text: '运动量 (cal)'
-            },
-            plotLines: [{
-                value: 0,
-                width: 1,
-                color: '#808080'
-            }]
-        },
-        tooltip: {
-            valueSuffix: 'cal'
-        },
-        legend: {
-            layout: 'vertical',
-            align: 'right',
-            verticalAlign: 'middle',
-            borderWidth: 0
-        },
-        series: [{
-            name: '运动量',
-            data: sportYData
-        }]
-    });
-}
+<script src="resource/js/controller/dataStatisticsController.js"></script>
 
-var BPSubTitle = '姓名:张三';
-var BPYear = 2016, BPMonth = 6, BPDay = 25;
-var BPYData = [
-               0.8446 , 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
-               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
-               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
-               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
-               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
-               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239,    0.8245, 0.8265,    0.8261, 0.8269,
-               0.8273, 0.8244, 0.8244, 0.8172,    0.8139, 0.8146,    0.8164, 0.82,    0.8269, 0.8269,
-               0.8269, 0.8258, 0.8247, 0.8286,    0.8289, 0.8316,    0.832, 0.8333,    0.8352, 0.8357,
-               0.8446, 0.8445, 0.8444, 0.8451,    0.8418, 0.8264,    0.8258, 0.8232,    0.8233, 0.8258,
-               0.8283, 0.8278, 0.8256, 0.8292,    0.8239, 0.8239
-           ];
-    
- function BPInit() {   
-    $('#BP').highcharts({
-        chart: {
-            zoomType: 'x',
-            spacingRight: 20
-        },
-        title: {
-            text: '<b>血压</b>'
-        },
-        subtitle: {
-            text: BPSubTitle
-        },
-        xAxis: {
-            type: 'datetime',
-            maxZoom: 0 * 24 * 3600000, // fourteen days
-            title: {
-                text: null
-            }
-        },
-        yAxis: {
-            title: {
-                text: '血压 (mmHg)'
-            }
-        },
-        tooltip: {
-            shared: true
-        },
-        legend: {
-            enabled: false
-        },
-        plotOptions: {
-            area: {
-                fillColor: {
-                    linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
-                    stops: [
-                        [0, Highcharts.getOptions().colors[0]],
-                        [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                    ]
-                },
-                lineWidth: 1,
-                marker: {
-                    enabled: false
-                },
-                shadow: false,
-                states: {
-                    hover: {
-                        lineWidth: 1
-                    }
-                },
-                threshold: null
-            }
-        },
-        
-        tooltip: {
-            valueSuffix: 'mmHg'
-        },
-        series: [{
-            type: 'area',
-            name: '血压',
-            pointInterval:  15 * 60 * 1000,
-            pointStart: Date.UTC(BPYear,BPMonth,BPDay,0,0,0,0),
-            data: BPYData
-        }]
-    });
-}
-sportInit();
-BPInit();
-</script>
 </body>
 </html>

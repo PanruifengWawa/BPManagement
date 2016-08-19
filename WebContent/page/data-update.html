@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<!--[if lt IE 9]>
+<script type="text/javascript" src="lib/html5.js"></script>
+<script type="text/javascript" src="lib/respond.min.js"></script>
+<script type="text/javascript" src="lib/PIE_IE678.js"></script>
+<![endif]-->
+<link href="css/H-ui.min.css" rel="stylesheet" type="text/css" />
+<link href="css/H-ui.admin.css" rel="stylesheet" type="text/css" />
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<link href="lib/Hui-iconfont/1.0.7/iconfont.css" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="lib/zTree/v3/css/zTreeStyle/zTreeStyle.css" type="text/css">
+<!--[if IE 6]>
+<script type="text/javascript" src="http://lib.h-ui.net/DD_belatedPNG_0.0.8a-min.js" ></script>
+<script>DD_belatedPNG.fix('*');</script>
+<![endif]-->
+<title>数据管理</title>
+</head>
+<body  ng-controller="dataUpdateController">
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span>数据管理<span class="c-gray en">&gt;</span> 人员数据修改 </nav>
+<div class="pd-20">
+  <form class="form form-horizontal" >
+  
+     
+	
+	
+	<div class="row cl">
+	   <label class="form-label col-2"><span class="c-red">*</span>修改内容：</label>
+	   <div class="formControls col-1">
+          <select ng-model="updateType" class="select">
+			<option value="weight">体重</option>
+			<option value="height">身高</option>
+			<option value="age">年龄</option>
+	      </select>
+       </div>
+    </div>
+    <div class="row cl" >
+      <label class="form-label col-2"><span class="c-red">*</span>ID：</label>
+      <div class="formControls col-3">
+        <input type="number" class="input-number" value="" ng-model="user.id" id="userId">
+      </div>
+    </div>
+    <div class="row cl" ng-show="updateType=='weight'">
+      <label class="form-label col-2"><span class="c-red">*</span>体重(kg)：</label>
+      <div class="formControls col-3">
+        <input type="number" class="input-number" ng-model="user.weight"  id="weight">
+      </div>
+    
+    </div>
+    <div class="row cl" ng-show="updateType=='height'">
+      <label class="form-label col-2"><span class="c-red">*</span>身高(cm)：</label>
+      <div class="formControls col-3">
+        <input type="number" class="input-number" ng-model="user.height"  id="height">
+      </div>
+    
+    </div>
+    <div class="row cl" ng-show="updateType=='age'">
+      <label class="form-label col-2"><span class="c-red">*</span>年龄：</label>
+      <div class="formControls col-3">
+        <input type="number" class="input-number" ng-model="user.age"  id="age">
+      </div>
+    
+    </div>
+    
+    
+    <div class="row cl">
+      <div class="col-3 col-offset-2">
+        <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;" ng-click="updateUser()">
+        <input class="btn btn-default radius" type="submit" value="&nbsp;&nbsp;取消&nbsp;&nbsp;" onClick="javascript:location.replace(location.href);">
+      </div>
+      
+    </div>
+  </form>
+</div>
+
+
+<script type="text/javascript" src="lib/jquery/1.9.1/jquery.min.js"></script> 
+<script type="text/javascript" src="lib/layer/2.1/layer.js"></script> 
+<script type="text/javascript" src="lib/zTree/v3/js/jquery.ztree.all-3.5.min.js"></script> 
+<script type="text/javascript" src="js/H-ui.js"></script> 
+<script type="text/javascript" src="js/H-ui.admin.js"></script> 
+
+
+<script src="resource/js/lib/angular.min.js"></script>
+
+<script src="resource/js/app.js"></script>
+
+<script src="resource/js/APIRouters.js"></script>
+
+<script src="resource/js/service/dataListService.js"></script>
+
+<script src="resource/js/controller/dataUpdateController.js"></script>
+</body>
+</html>

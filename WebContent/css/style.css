@@ -12,7 +12,7 @@
 .my-table td.value {
 	width: 80px;
 }
-.my-table caption.my-caption {
+.my-caption {
 	font-weight:bold;
 	font-size:18px;
 }
