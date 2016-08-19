@@ -39,4 +39,9 @@ public class NavigationController {
         return "/data-statistics";
 	}
 
+
+	@RequestMapping(value="/data_update")
+    public String dataUpdate(){
+        return "/data-update";
+	}
 }

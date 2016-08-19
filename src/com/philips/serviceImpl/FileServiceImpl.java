@@ -45,6 +45,7 @@ public class FileServiceImpl implements FileService {
 					Integer userId = null;
 					try {
 						userId = Integer.parseInt(temp[0]);
+						System.out.println(userId);
 					} catch (Exception e) {
 						// TODO: handle exception
 						e.printStackTrace();
