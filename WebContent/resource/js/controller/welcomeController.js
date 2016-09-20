@@ -13,9 +13,9 @@ myApp.controller("welcomeController",function($scope,$rootScope,welcomeService) 
 		
 		var promise = welcomeService.getWelcomeInfo();
 		promise.success(function(data,status,config,headers) {
+			welcomeService.setWelcomeInfo();
 			$scope.loginInfo = JSON.parse(data);
 			sessionStorage.loginInfo = data;
-			welcomeService.setWelcomeInfo();
 		});
 		promise.error(function(){
 			welcomeService.setWelcomeInfo();

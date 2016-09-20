@@ -38,6 +38,55 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 	    });
 	}
 	
+	$scope.getActivity = function(userId,date) {
+		var promise = dataStatisticsService.getActivity(userId,date);
+	    promise.success(function(data,status,config,headers) {
+	    	if(data.code === 0) {
+	    		$scope.activity = data.data;
+	    	} else {
+	    		alert("获取能量消耗记录失败");
+	    	}
+			
+	    });
+		
+		promise.error(function() {
+			alert("获取能量消耗记录失败");
+	    });
+	}
+	
+	$scope.getWeather = function(date) {
+		var promise = dataStatisticsService.getWeather(date);
+	    promise.success(function(data,status,config,headers) {
+	    	if(data.code === 0) {
+	    		$scope.weather = data.data;
+	    	} else {
+	    		alert("获取日期记录失败");
+	    	}
+			
+	    });
+		
+		promise.error(function() {
+			alert("获取日期记录失败");
+	    });
+	}
+	
+	
+	$scope.getEatTimes = function(userId,date) {
+		var promise = dataStatisticsService.getEatTime(userId,date);
+	    promise.success(function(data,status,config,headers) {
+	    	if(data.code === 0) {
+	    		$scope.eatTimes = data.data;
+	    	} else {
+	    		alert("获取用餐时间记录失败");
+	    	}
+			
+	    });
+		
+		promise.error(function() {
+			alert("获取用餐时间记录失败");
+	    });
+	}
+	
 	$scope.getTodayFormatDate = function(){
         var date = new Date();
         var seperator1 = "-";
@@ -76,7 +125,7 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 	    		var symptomData = data.data;
 				for(var i = 0 ; i < symptomData.length; i++) {
 					var mdate = new Date(date + " " + symptomData[i].time);
-					$scope.symptom.push([Date.UTC(mdate.getFullYear(), mdate.getMonth(), mdate.getDate(),mdate.getHours(),mdate.getMinutes()),symptomData[i].state]);
+					$scope.symptom.push([Date.UTC(mdate.getFullYear(), mdate.getMonth(), mdate.getDate(),mdate.getHours(),mdate.getMinutes()),symptomData[i].state-1]);
 				}
 	    	} else {
 	    		alert("获取情绪记录失败");
@@ -90,11 +139,12 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 	    });
 	}
 	
-	$scope.setSymptomGraph = function(userId,symptom) {
+	$scope.setSymptomGraph = function(userId,symptom) { 
 		$(function () {
 		    $('#symptom').highcharts({
 		        chart: {
-		            type: 'spline'
+		            type: 'scatter',
+		            zoomType: 'xy'
 		        },
 		        title: {
 		            text: '<span style="font-size:20px;font-weight:bold;">症状变化</span>'
@@ -103,7 +153,7 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		            text: '用户ID:' + userId
 		        },
 		        xAxis: {
-		            type: 'datetime',
+		        	type: 'datetime',
 		            dateTimeLabelFormats: { // don't display the dummy year
 		                month: '%e. %b',
 		                year: '%b'
@@ -113,29 +163,57 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		            }
 		        },
 		        yAxis: {
-		            title: {
+		        	title: {
 		                text: '症状'
 		            },
-		            categories: ['症状A','症状B','症状C','症状D','症状E','症状F','症状G','症状H','症状I','症状J','症状K','症状L']
+		            categories: ['心悸','嗜睡','恶心','腰酸','腹泻','头晕','发烧','鼻塞','背痛','耳鸣','胸痛','气短','咳痰','呕吐','食欲不振','视力模糊','排尿困难','四肢乏力','黑色大便']
+		        },
+		        plotOptions: {
+		            scatter: {
+		                marker: {
+		                    radius: 5,
+		                    states: {
+		                        hover: {
+		                            enabled: true,
+		                            lineColor: 'rgb(100,100,100)'
+		                        }
+		                    }
+		                },
+		                states: {
+		                    hover: {
+		                        marker: {
+		                            enabled: false
+		                        }
+		                    }
+		                }
+		            }
+		            
 		        },
 		        tooltip: {
 		            formatter: function () {
 		                return Highcharts.dateFormat('%e. %b,%H:%M',this.x) + '<br>症状类型:' + this.series.yAxis.categories[this.point.y] ;
 		            }
 		        },
-		        plotOptions: {
-		            spline: {
-		                marker: {
-		                    enabled: true
-		                }
-		            }
-		        },
 		        series: [{
 		            name: '症状变化',
-		            data: symptom
+		            color: 'rgba(223, 83, 83, .5)',
+		            data: symptom,
+		            dataLabels: {
+		                enabled: true,
+		                color: '#FFFFFF',
+		                align: 'center',
+		                formatter: function () {
+			                return this.series.yAxis.categories[this.point.y] ;
+			            },
+		                y: 10 // 10 pixels down from the top
+//		                style: {
+//		                    fontSize: '3px'
+//		                }
+		            }
 		        }]
 		    });
 		});
+
 	}
 	
 	$scope.setMontionGraph = function(userId,montion) {
@@ -163,14 +241,15 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		        yAxis: {
 		            title: {
 		                text: '情绪'
-		            },
-		            categories: ['开心A','开心B','开心C','开心D','开心E','开心F','开心G','开心H','开心I','开心J','开心K','开心L']
+		            }
+//		            categories: ['开心A','开心B','开心C','开心D','开心E','开心F','开心G','开心H','开心I','开心J','开心K','开心L']
 		        },
 		        tooltip: {
 //		            headerFormat: '{point.x:%e. %b,%H:%M}<br>',
 //		            pointFormat: '{series.name}: <b>情绪类型' + this.series.yAxis.categories[this.point.y]  + '</b>',
 		            formatter: function () {
-		                return Highcharts.dateFormat('%e. %b,%H:%M',this.x) + '<br>情绪类型:' + this.series.yAxis.categories[this.point.y] ;
+		                return Highcharts.dateFormat('%e. %b,%H:%M',this.x) + '<br>情绪类型:' + this.point.y;
+//		                this.series.yAxis.categories[this.point.y] ;
 		            }
 		        },
 		        plotOptions: {
@@ -385,6 +464,12 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		
 		$scope.salt = [];
 		
+		$scope.eatTimes = [];
+		
+		$scope.activity = [];
+		
+		$scope.weather = {};
+		
 		$scope.setBPGraph('',$scope.BPSYS,$scope.BPDIA);
 		$scope.setMontionGraph('',$scope.montion);
 		$scope.setSymptomGraph('',$scope.symptom);
@@ -396,6 +481,9 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		document.getElementById('searchMontionDate').value = $scope.todayDate;
 		document.getElementById('searchSymptomDate').value = $scope.todayDate;
 		document.getElementById('searchDrinkDate').value = $scope.todayDate;
+		document.getElementById('searchEatDate').value = $scope.todayDate;
+		document.getElementById('searchActivityDate').value = $scope.todayDate;
+		document.getElementById('searchWeatherDate').value = $scope.todayDate;
 		
 		
 		document.getElementById('searchSaltStartDate').value = $scope.addDate($scope.todayDate,-7);
@@ -424,8 +512,19 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		$scope.getDrink($scope.userId,$scope.todayDate)
 		//获取盐含量记录并渲染
 		$scope.getSalt($scope.userId,$scope.addDate($scope.todayDate,-7),$scope.todayDate);
+		//获取用餐时间记录
+		$scope.getEatTimes($scope.userId,$scope.todayDate);
+		//获取能量消耗记录
+		$scope.getActivity($scope.userId,$scope.todayDate);
+		//获取天气记录
+		$scope.getWeather($scope.todayDate);
 		
-		
+	}
+	
+	$scope.searchWeatherRecord = function() {
+		$scope.weather = {};
+		var searchDate = document.getElementById("searchWeatherDate").value;
+		$scope.getWeather(searchDate);
 	}
 	
 	$scope.searchBP = function() {
@@ -439,6 +538,16 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		$scope.getBPData($scope.userId,searchDate);
 		
 		
+	}
+	
+	$scope.searchActivity = function() {
+		if($scope.userId === undefined ||$scope.userId === '') {
+			alert("请输入用户ID");
+			return;
+		}
+		$scope.activity = [];
+		var searchDate = document.getElementById("searchActivityDate").value;
+		$scope.getActivity($scope.userId,searchDate);
 	}
 	
 	$scope.searchSalt = function() {
@@ -490,6 +599,16 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		$scope.drink = [];
 		var searchDate = document.getElementById("searchDrinkDate").value;
 		$scope.getDrink($scope.userId,searchDate);
+	}
+	
+	$scope.searchEatTime = function() {
+		if($scope.userId === undefined ||$scope.userId === '') {
+			alert("请输入用户ID");
+			return;
+		}
+		$scope.eatTimes = [];
+		var searchDate = document.getElementById("searchEatDate").value;
+		$scope.getEatTimes($scope.userId,searchDate);
 	}
 	
 	$scope.mealTypes = ["未知","早餐","中餐","晚餐"];

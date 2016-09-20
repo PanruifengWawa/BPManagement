@@ -1,4 +1,24 @@
 myApp.service("dataStatisticsService",function($http,APIRouters) {
+	
+	this.getWeather = function(date) {
+		return $http({
+			method: 'GET',
+			url: APIRouters.weatherAPI + "?time=" + date,
+			headers: {
+				'Token': sessionStorage.token
+			}
+		});
+	}
+	
+	this.getActivity = function(userId,date) {
+		return $http({
+			method: 'GET',
+			url: APIRouters.activityAPI + "?userId=" + userId + "&date=" + date,
+			headers: {
+				'Token': sessionStorage.token
+			}
+		});
+	}
 	this.getBPData = function(userId,date) {
 		return $http({
 			method: 'GET',
@@ -53,6 +73,17 @@ myApp.service("dataStatisticsService",function($http,APIRouters) {
 		return $http({
 			method: 'GET',
 			url: APIRouters.saltAPI + "?userId=" + userId + "&start=" + start + "&end=" + end,
+			headers: {
+				'Token': sessionStorage.token
+			}
+		});
+	}
+	
+	
+	this.getEatTime = function(userId,date) {
+		return $http({
+			method: 'GET',
+			url: APIRouters.eatTimeAPI + "?userId=" + userId + "&date=" + date,
 			headers: {
 				'Token': sessionStorage.token
 			}

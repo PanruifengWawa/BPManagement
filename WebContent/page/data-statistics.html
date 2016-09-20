@@ -60,6 +60,48 @@
 		
 	</div>
 	<br>
+	
+	<br>
+	<div class="text-c search"> 日期(天气记录)：
+		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchWeatherDate">
+		
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchWeatherRecord()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort">
+		    <caption class="my-caption">天气记录</caption>
+			<thead>
+				<tr class="text-c">
+				    <th width="30">日期</th>
+				    <th width="30">温度(℃)</th>
+					<th width="30">湿度</th>
+					<th width="30">CURPM</th>
+					<th width="30">PM10</th>
+					<th width="30">PM25</th>
+
+				</tr>
+			</thead>
+			<tbody>
+			    <tr class="text-c" ng-if="weather.time!=undefined && weather.pm25!=0">
+			        <td>{{weather.time}}</td>
+			        <td>{{weather.temperature}}</td>
+			        <td>{{weather.humidity}}</td>
+			        <td>{{weather.curpm}}</td>
+			        <td>{{weather.pm10}}</td>
+			        <td>{{weather.pm25}}</td>
+			     
+			    </tr>
+				<tr>
+				    <td colspan="6" ng-if="weather.time==undefined || weather.pm25==0">无数据</td>
+				</tr>
+				
+			</tbody> 
+		</table>
+		
+	</div><br>
+	
+	
+	
 	<div class="text-c search"> 日期(饮食记录)：
 		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchFoodDate">
 		
@@ -95,11 +137,11 @@
 			            <span ng-if="foodRecord.fastfood>0">快餐</span>
 			            <span ng-if="foodRecord.eatout>0">在外就餐</span>
 			            <span ng-if="foodRecord.sweet>0">甜点</span>
-			            <span ng-if="foodRecord.salt>0">盐{{foodRecord.salt}}勺</span>
-			            <span ng-if="foodRecord.soysauce>0">酱油{{foodRecord.soysauce}}勺</span>
-			            <span ng-if="foodRecord.sauce>0">酱料{{foodRecord.sauce}}勺</span>
-			            <span ng-if="foodRecord.condiment>0">调味品{{foodRecord.condiment}}勺</span>
-			            <span ng-if="foodRecord.mainfood>0">主食{{foodRecord.mainfood}}两</span>
+			            <span ng-if="foodRecord.salt>0">盐{{foodRecord.salt/10}}勺</span>
+			            <span ng-if="foodRecord.soysauce>0">酱油{{foodRecord.soysauce/10}}勺</span>
+			            <span ng-if="foodRecord.sauce>0">酱料{{foodRecord.sauce/10}}勺</span>
+			            <span ng-if="foodRecord.condiment>0">调味品{{foodRecord.condiment/10}}勺</span>
+			            <span ng-if="foodRecord.mainfood>0">主食{{foodRecord.mainfood/10}}两</span>
 			        </td>
 			    </tr>
 				<tr>
@@ -110,6 +152,63 @@
 		</table>
 		
 	</div><br>
+	
+	
+	<div class="text-c search"> 日期(用餐时间记录)：
+		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchEatDate">
+		
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchEatTime()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort">
+		    <caption class="my-caption">用户用餐时间记录</caption>
+			<thead>
+				<tr class="text-c">
+					<th width="30">ID</th>
+					<th width="30">用餐类型</th>
+					<th width="120">时间</th>
+
+				</tr>
+			</thead>
+			<tbody>
+			    <tr class="text-c" ng-if="eatTimes.length>0">
+			        <td>{{userId}}</td>
+			        <td>早餐</td>
+			        <td>
+			             <span ng-repeat="item in eatTimes" ng-show="item.type==1">
+			                 {{item.time}}
+			             </span>
+			        </td>
+			    </tr>
+			    <tr class="text-c"  ng-if="eatTimes.length>0">
+			        <td>{{userId}}</td>
+			        <td>午餐</td>
+			        <td>
+			             <span ng-repeat="item in eatTimes" ng-show="item.type==2">
+			                 {{item.time}}
+			             </span>
+			        </td>
+			    </tr>
+			    <tr class="text-c"  ng-if="eatTimes.length>0">
+			        <td>{{userId}}</td>
+			        <td>晚餐</td>
+			        <td>
+			             <span ng-repeat="item in eatTimes" ng-show="item.type==3">
+			                 {{item.time}}
+			             </span>
+			        </td>
+			    </tr>
+				<tr>
+				    <td colspan="7" ng-if="eatTimes.length==0">无数据</td>
+				</tr>
+				
+			</tbody> 
+		</table>
+		
+	</div><br>
+	
+	
+	
 	<div class="text-c search"> 日期(饮品与吸烟记录)：
 		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchDrinkDate">
 		
@@ -149,6 +248,39 @@
 		
 	</div><br>
 	
+	<div class="text-c search"> 日期(能量消耗记录)：
+		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchActivityDate">
+		
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchActivity()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort">
+		    <caption class="my-caption">能量消耗记录</caption>
+			<thead>
+				<tr class="text-c">
+					<th width="30">ID</th>
+					<th width="30">开始时间</th>
+					<th width="30">结束时间</th>
+					<th width="30">类型</th>
+				</tr>
+			</thead>
+			<tbody>
+			    <tr class="text-c" ng-repeat="item in activity">
+			        <td>{{item.userId}}</td>
+			        <td>{{item.ft}}</td>
+			        <td>{{item.tt}}</td>
+			        <td>{{item.type}}</td>
+			    </tr>
+				<tr>
+				    <td colspan="4" ng-if="activity.length==0">无数据</td>
+				</tr>
+				
+			</tbody> 
+		</table>
+		
+	</div><br>
+	
+	
 <!-- 	<div class="text-c search"> 日期范围：
 		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="sportStartData" class="input-text Wdate" style="width:120px;" value="2016-07-25">
 		-
@@ -163,33 +295,33 @@
 	<div class="text-c search"> 日期(血压记录)：
 		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchBPDate">
 		
-		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchBP()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
-	</div>
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchBP()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button><br><br>
+	</div><br><br>
 	<div id="BP" style="min-width:700px;height:400px"></div>
 	<br><br>
 	
 	<div class="text-c search"> 日期(情绪记录)：
 		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;"  id="searchMontionDate">
 		
-		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchMontion()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
-	</div>
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchMontion()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button><br><br>
+	</div><br><br>
 	<div id="montion" style="min-width:700px;height:400px"></div>
 	
 	<br><br>
 	<div class="text-c search"> 日期(症状记录)：
 		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchSymptomDate">
 		
-		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchSymptom()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
-	</div>
-	<div id="symptom" style="min-width:700px;height:400px"></div>
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchSymptom()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button><br><br>
+	</div><br><br>
+	<div id="symptom" style="min-width:700px;height:650px"></div>
 	
 	<br><br>
 	<div class="text-c search">日期(盐含量记录)：
 		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'searchSaltEndDate\')||\'%y-%M-%d\'}'})" id="searchSaltStartDate" class="input-text Wdate" style="width:120px;" >
 		-
 		<input type="text" onfocus="WdatePicker({minDate:'#F{$dp.$D(\'searchSaltStartDate\')}',maxDate:'%y-%M-%d'})" id="searchSaltEndDate" class="input-text Wdate" style="width:120px;">
-		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchSalt()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
-	</div>
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchSalt()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button><br><br>
+	</div><br><br>
 	<div id="salt" style="min-width:700px;height:400px"></div>
 </div>
 

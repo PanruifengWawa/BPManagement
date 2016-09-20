@@ -10,7 +10,10 @@ var routers = {
 		"montionAPI" : "http://115.28.204.123:8080/v1/admin/data/motion",
 		"symptomAPI" : "http://115.28.204.123:8080/v1/admin/data/symptom",
 		"drinkAPI" : "http://115.28.204.123:8080/v1/admin/data/drink",
-		"saltAPI" : "http://115.28.204.123:8080/v1/admin/data/salt"
+		"saltAPI" : "http://115.28.204.123:8080/v1/admin/data/salt",
+		"eatTimeAPI" : "http://115.28.204.123:8080/v1/admin/data/meal",
+		"activityAPI" : "http://115.28.204.123:8080/v1/admin/data/activity",
+		"weatherAPI" : "http://115.28.204.123:8080/v1/common/weather/getDayWeather"
 }
 
 myApp.value("APIRouters", routers);
