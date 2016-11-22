@@ -1,5 +1,15 @@
 myApp.service("dataStatisticsService",function($http,APIRouters) {
 	
+	this.getDrugInfo = function(userId,date) {
+		return $http({
+			method: 'GET',
+			url: APIRouters.drugUserAPI + "?userId=" + userId + "&date=" + date,
+			headers: {
+				'Token' : sessionStorage.token
+			}
+		});
+	}
+	
 	this.getWeather = function(date) {
 		return $http({
 			method: 'GET',

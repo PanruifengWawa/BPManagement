@@ -280,6 +280,42 @@
 		
 	</div><br>
 	
+	<div class="text-c search"> 日期(用药记录)：
+		<input type="text" onfocus="WdatePicker({maxDate:'%y-%M-%d'})" class="input-text Wdate" style="width:120px;" id="searchDrugDate">
+		
+		<button name="" id="" class="btn btn-success" type="submit" ng-click="searchDrug()"><i class="Hui-iconfont">&#xe665;</i> 搜索</button>
+	</div>
+	<div class="mt-20">
+		<table class="table table-border table-bordered table-bg table-hover table-sort">
+		    <caption class="my-caption">用药记录记录</caption>
+			<thead>
+				<tr class="text-c">
+					<th width="30">ID</th>
+					<th width="30">药名</th>
+					<th width="30">用药时间</th>
+					<th width="30">填写时间</th>
+					<th width="30">用药类型</th>
+					<th width="30">用药计量</th>
+				</tr>
+			</thead>
+			<tbody>
+			    <tr class="text-c" ng-repeat="item in drugs">
+			        <td>{{item.userId}}</td>
+			        <td>{{item.drugname}}</td>
+			        <td>{{item.time}}</td>
+			        <td>{{item.fillingtime}}</td>
+			        <td>{{item.drugtype}}</td>
+			        <td>{{item.dose/10}} {{item.use}}</td>
+			    </tr>
+				<tr>
+				    <td colspan="6" ng-if="drugs.length==0">无数据</td>
+				</tr>
+				
+			</tbody> 
+		</table>
+		
+	</div><br>
+	
 	
 <!-- 	<div class="text-c search"> 日期范围：
 		<input type="text" onfocus="WdatePicker({maxDate:'#F{$dp.$D(\'logmax\')||\'%y-%M-%d\'}'})" id="sportStartData" class="input-text Wdate" style="width:120px;" value="2016-07-25">

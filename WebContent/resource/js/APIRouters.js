@@ -13,7 +13,8 @@ var routers = {
 		"saltAPI" : "http://115.28.204.123:8080/v1/admin/data/salt",
 		"eatTimeAPI" : "http://115.28.204.123:8080/v1/admin/data/meal",
 		"activityAPI" : "http://115.28.204.123:8080/v1/admin/data/activity",
-		"weatherAPI" : "http://115.28.204.123:8080/v1/common/weather/getDayWeather"
+		"weatherAPI" : "http://115.28.204.123:8080/v1/common/weather/getDayWeather",
+		"drugUserAPI" : "http://115.28.204.123:8080/v1/admin/data/drug"
 }
 
 myApp.value("APIRouters", routers);

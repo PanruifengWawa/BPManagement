@@ -38,6 +38,22 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 	    });
 	}
 	
+	$scope.getDrug = function(userId,date) {
+		var promise = dataStatisticsService.getDrugInfo(userId,date);
+	    promise.success(function(data,status,config,headers) {
+	    	if(data.code === 0) {
+	    		$scope.drugs = data.data;
+	    	} else {
+	    		alert("获取用药记录失败");
+	    	}
+			
+	    });
+		
+		promise.error(function() {
+			alert("获取用药记录失败");
+	    });
+	}
+	
 	$scope.getActivity = function(userId,date) {
 		var promise = dataStatisticsService.getActivity(userId,date);
 	    promise.success(function(data,status,config,headers) {
@@ -470,6 +486,8 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		
 		$scope.weather = {};
 		
+		$scope.drugs = [];
+		
 		$scope.setBPGraph('',$scope.BPSYS,$scope.BPDIA);
 		$scope.setMontionGraph('',$scope.montion);
 		$scope.setSymptomGraph('',$scope.symptom);
@@ -485,6 +503,7 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		document.getElementById('searchActivityDate').value = $scope.todayDate;
 		document.getElementById('searchWeatherDate').value = $scope.todayDate;
 		
+		document.getElementById('searchDrugDate').value = $scope.todayDate;
 		
 		document.getElementById('searchSaltStartDate').value = $scope.addDate($scope.todayDate,-7);
 		document.getElementById('searchSaltEndDate').value = $scope.todayDate;
@@ -518,6 +537,8 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		$scope.getActivity($scope.userId,$scope.todayDate);
 		//获取天气记录
 		$scope.getWeather($scope.todayDate);
+		//获取用药记录
+		$scope.getDrug($scope.userId,$scope.todayDate);
 		
 	}
 	
@@ -548,6 +569,16 @@ myApp.controller("dataStatisticsController",function($scope,dataStatisticsServic
 		$scope.activity = [];
 		var searchDate = document.getElementById("searchActivityDate").value;
 		$scope.getActivity($scope.userId,searchDate);
+	}
+	
+	$scope.searchDrug = function() {
+		if($scope.userId === undefined ||$scope.userId === '') {
+			alert("请输入用户ID");
+			return;
+		}
+		$scope.drugs = [];
+		var searchDate = document.getElementById("searchDrugDate").value;
+		$scope.getDrug($scope.userId,searchDate);
 	}
 	
 	$scope.searchSalt = function() {
